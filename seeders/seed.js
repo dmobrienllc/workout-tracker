@@ -8,6 +8,11 @@ const config = { useNewUrlParser: true,
 
 mongoose.connect("mongodb://localhost/exercisetrackerdb",config);
 
+const userSeed = [
+
+
+]
+
 const workoutSeed = [
   {
     day: new Date(new Date().setDate(new Date().getDate() - 9)),
@@ -26,7 +31,7 @@ const workoutSeed = [
     day: new Date(new Date().setDate(new Date().getDate() - 8)),
     exercises: [
       {
-        type: 'Intense Cardio',
+        type: 'Cardio',
         name: 'Cycling',
         duration: 90,
         distance: 8,
@@ -128,7 +133,10 @@ const workoutSeed = [
   },
 ];
 
-db.Workout.deleteMany({})
+// const seedUser
+
+const seedWorkouts = () => {
+  db.Workout.deleteMany({})
   .then(() => db.Workout.collection.insertMany(workoutSeed))
   .then((data) => {
     console.log(data.result.n + ' records inserted!');
@@ -138,26 +146,6 @@ db.Workout.deleteMany({})
     console.error(err);
     process.exit(1);
   });
-
-
-// db.Workout.deleteMany({})
-//   .db.Exercise.deleteMany({})
-//   .catch((err) => {
-//     console.error(err);
-//     process.exit(1);
-//   });
-
-// try{
-//   for(let i=0;i<workoutSeed.length;i++){
-//     db.Workout.create(workoutSeed[i])
-//     .then( ({_id}) => db.Category.findOneAndUpdate({'_id': _id}, { $push: { transactions: _id } }, { new: true }) )
-//     .then( updatedCategory => res.json({ result: "success", payload: updatedCategory }))
-//   }
-// }
-// catch(err){
-//   console.log(err);
-// }
-
-
+}
 
 
