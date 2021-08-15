@@ -1,0 +1,85 @@
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h3>Welcome {{user.username}}!</h3>
+    <h3>Email {{user.email}}!</h3>
+  </div>
+</div>
+<div class="container mt">
+  <h1 class="text-center">Workout Dashboard</h1>
+  <div class="row mt">
+    <div class="col-md-6">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="canvas2"></canvas>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
+
+{{!--
+<script src="../js/dashboard.js"></script> --}}
+
+
+{{!--
+{{#if user.posts.length}}
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h3>Welcome {{user.user_name}}!</h3>
+  </div>
+</div>
+{{#each user.posts as |post| }}
+
+<div class="row mb-4 post">
+  <div class="card col-md-10">
+    <div class="card-header">
+      <i class='fas fa-glasses'></i> <a href="/posts/{{post.id}}">{{post.post_title}}</a> <span>Created on {{format_date
+        post.created_at}}</span>
+      <button class="btn btn-sm btn-info edit-post" data-post-id="{{post.id}}">EDIT</button>
+      <button class="btn btn-sm btn-danger delete-post" data-post-id="{{post.id}}">DELETE</button>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{post.post_body}}</p>
+    </div>
+  </div>
+</div> --}}
+
+{{!-- {{#each post.comments as |comment|}}
+<div class="row mb-2">
+  <div class="col-md-8">
+    <h5>
+      {{comment.comment_body}}
+    </h5>
+    <p>Created by need user on {{format_date comment.created_at}}</p>
+  </div>
+  <div class="col-md-4">
+    <button class="btn btn-sm btn-danger delete-comment" data-comment-id="{{comment.id}}">DELETE</button>
+  </div>
+</div>
+{{/each}} --}}
+{{!-- {{/each}}
+{{else}}
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h3>Welcome, {{user.user_name}}! Create a post and start the conversation!</h3>
+  </div>
+</div>
+{{/if}}
+
+<div class="row mb-4">
+  <div class="col-md-12">
+    <form class="form new-post-form">
+      <div class="form-group">
+        <label for="name-signup">Title:</label>
+        <input class="form-input" type="text" id="post-title" />
+      </div>
+      <div class="form-group">
+        <label for="email-signup">Body:</label>
+        <input class="form-input" type="textarea" id="post-body" />
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary" type="submit" data-post-user-id="{{user.id}}">Create</button>
+      </div>
+    </form>
+  </div>
+</div> --}}

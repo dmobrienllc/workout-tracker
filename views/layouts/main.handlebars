@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workout-Fitness Tracker</title>
+  {{!--
+  <link rel="stylesheet" href="/css/jass.css">
+  <link rel="stylesheet" href="/css/style.css"> --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/jass.css">
+</head>
+
+<body>
+  <nav>
+    <span>Workout and Fitness Tracker App</span> |
+    <a href="/homepage">Homepage</a> |
+    <a href="/dashboard">Dashboard</a> |
+
+    {{#if logged_in}}
+    <a href="/logout">Logout</a>
+    {{else}}
+    <a href="/login">Login</a>
+    {{/if}}
+  </nav>
+  <div class="flex-column justify-space-around">
+    <main class="container container-fluid mt-5">
+      {{{ body }}}
+    </main>
+    <footer>
+
+    </footer>
+  </div>
+
+  <!-- Render script for logged in users only -->
+  {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+  {{else}}
+    <script src="/js/login.js"></script>
+  {{/if}}
+
+
+  <!--NOTE will come from the old fitness tracker app, figure out where to put them
+      <script src="/api.js"></script>
+      <script src="/workout.js"></script>
+      <script src="/index.js"></script>-->
+</body>
+
+</html>
