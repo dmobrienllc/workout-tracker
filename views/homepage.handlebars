@@ -1,27 +1,46 @@
-  <div class="wrapper workout">
-    <header>
-      <h1>Fitness Tracker</h1>
-    </header>
-    <div class="ui container workout">
-      <div class="ui raised card m-auto">
-        <div class="prev-workout">
-          <h3>Last Workout</h3>
-          <h5>Logged In: {{logged_in}}</h5>
-          <div>
-            <div class="workout-stats"></div>
-            <div class="buttons">
-              <a id="continue-btn" href="/exercise?" class="huge ui blue button">Continue Workout</a>
-              <a href="/exercise" class="huge positive ui button">New Workout</a>
-            </div>
+<div class="wrapper workout">
+  <header>
+    <h1>Fitness Tracker</h1>
+    {{#if user.workouts.length}}
+      <ul>
+      {{#each user.workouts as |workout| }}
+        <li>{{workout.day}}</li>
+      {{/each}}
+      </ul>
+    {{else}}
+      <h4>You have no workouts! Click on New Workout to get started!</h4>
+    {{/if}}
+  </header>
+  {{#if logged_in}}
+  <div class="ui container workout">
+    <div class="ui raised card m-auto">
+      <div class="prev-workout">
+        <h3>Last Workout</h3>
+        <div>
+          <div class="workout-stats"></div>
+          <div class="buttons">
+            <a id="continue-btn" href="/exercise?" class="huge ui blue button">Continue Workout</a>
+            <a href="/exercise" class="huge positive ui button">New Workout</a>
           </div>
         </div>
-        <div class="new-workout">
-          <h3>Create Your First Workout</h3>
-        </div>
+      </div>
+      <div class="new-workout">
+        <h3>Create Your First Workout</h3>
       </div>
     </div>
   </div>
+</div>
+{{else}}
+  <div class="ui container workout">
+    <div class="ui raised card m-auto">
+        <h3>Login or sign up to begin tracking your workouts today!</h3>
+      </div>
   </div>
-  <div id="toast">
-    Workout Added Successfully!
-  </div>
+{{/if}}
+
+<div id="toast">
+  Workout Added Successfully!
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/homepage.js"></script>

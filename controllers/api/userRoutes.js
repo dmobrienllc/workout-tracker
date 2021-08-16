@@ -16,7 +16,6 @@ const User = require('../../models/User');
 // });
 
 router.post('/', async (req, res) => {
-  console.log("Hitting create user");
   try {
 
     let userData = await User.findOne 
@@ -29,7 +28,6 @@ router.post('/', async (req, res) => {
     }
 
     req.session.save(() => {
-        console.log("Hitting save session");
       req.session.user_id = userData._id;
       req.session.logged_in = true;
 

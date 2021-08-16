@@ -14,7 +14,7 @@ const loginFormHandler = async (event) => {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      document.location.replace('/dashboard');
+      document.location.replace('/homepage');
     }
   }
   catch (err) {
@@ -38,7 +38,7 @@ const signupFormHandler = async (event) => {
         body: JSON.stringify({ username, email, password }),
         headers: { 'Content-Type': 'application/json' },
       });
-      document.location.replace('/dashboard');
+      document.location.replace('/homepage');
     }
   }
   catch (err) {

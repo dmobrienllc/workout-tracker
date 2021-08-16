@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User,Workout,Exercise} = require('../models');
+const { User, Workout, Exercise } = require('../models');
 const withAuth = require('../utils/auth');
 
 //THIS WILL TAKE DAILY WORKOUT DATA IF USER IS LOGGED IN,
@@ -19,24 +19,12 @@ router.get('/', async (req, res) => {
 router.get('/homepage', async (req, res) => {
     console.log("Home Routes/homepage");
     try {
-        // const postData = await Post.findAll({
-        //     include: [
-        //         {
-        //             model: User,
-        //             attributes: ['id', 'user_name'],
-        //         },
-        //     ],
-        // });
-
-        // const posts = postData.map((post) => post.get({ plain: true }));
-
-        // res.render('homepage', {
-        //     posts,
-        //     logged_in: req.session.logged_in
-        // });
-        req.session.logged_in = true;
+ 
+        const user = await User.findOne({ _id: req.session.user_id }).
+                                                        populate('workouts').lean();
 
         res.render('homepage', {
+            user,
             logged_in: req.session.logged_in
         });
     } catch (err) {
@@ -49,13 +37,48 @@ router.get('/dashboard', withAuth, async (req, res) => {
     console.log("In Homeroutes/dashboard");
 
     try {
+        const user = await User.findOne
+            ({
+                "_id": req.session.user_id
+            }).lean();
 
-        const user = await User.findOne 
-        ({ 
-            "_id" : req.session.user_id
-        }).lean();
+        res.render('dashboard', {
+            user,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        console.log("Error in /dashboard");
+        res.status(500).json(err);
+    }
+});
 
-        console.log("User",user);
+router.get('/exercise', withAuth, async (req, res) => {
+    console.log("In Homeroutes/exercise");
+
+    try {
+        const user = await User.findOne
+            ({
+                "_id": req.session.user_id
+            }).lean();
+
+        res.render('exercise', {
+            user,
+            logged_in: req.session.logged_in
+        });
+    } catch (err) {
+        console.log("Error in /exercise");
+        res.status(500).json(err);
+    }
+});
+
+router.get('/exercise/:id', withAuth, async (req, res) => {
+    console.log("In Homeroutes/exercise");
+
+    try {
+        const user = await User.findOne
+            ({
+                "_id": req.session.user_id
+            }).lean();
 
         res.render('dashboard', {
             user,
@@ -78,17 +101,17 @@ router.get('/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
     console.log("Home Routes/logout");
-if (req.session.logged_in) {
-    req.session.destroy(async () => {
+    if (req.session.logged_in) {
+        req.session.destroy(async () => {
 
-        res.render('homepage', {
-            logged_in: false
+            res.render('homepage', {
+                logged_in: false
+            });
+            return;
         });
-        return;
-    });
-  } else {
-    res.status(404).end();
-  }
+    } else {
+        res.status(404).end();
+    }
 });
 
 // //OLD HOME PAGE, 
