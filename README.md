@@ -36,9 +36,9 @@ A list of technologies/patterns used within the project:
 ## Usage
 ***
 
-Link to github repository- https://github.com/dmobrienllc/hw18-workout-tracker
+Link to github repository- https://github.com/dmobrienllc/workout-tracker
 
-Link to deployed app- https://floating-reef-04864.herokuapp.com/
+Link to deployed app- https://agile-savannah-88482.herokuapp.com/
 
 
 ## FAQs
