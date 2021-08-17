@@ -115,7 +115,12 @@ async function handleFormSubmit(event) {
 
   await API.addExercise(workoutData);
   clearInputs();
-  toast.classList.add("success");
+
+  if (shouldNavigateAway) {
+    location.href = "/";
+  }
+
+  //toast.classList.add("success");
 }
 
 function handleToastAnimationEnd() {

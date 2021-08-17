@@ -8,8 +8,8 @@
       <div class="prev-workout">
         <h3>Last Workout for {{data.userName}}</h3>
         <div>
+          {{#if data.hasWorkouts}}
           <div class="workout-stats">
-
             <p><strong>Date: {{data.workoutDate}}</strong></p>
             <h5>Resistance Totals:</h5>
             <p><strong>Duration: {{data.resistDuration}}</strong></p>
@@ -22,9 +22,18 @@
             <p><strong>Total Distance Covered: {{data.cardioDistance}} miles</strong></p>
             <p><strong>Total Duration: {{data.cardioDuration}} minutes</strong></p>
           </div>
+          {{else}}
+          <div class="ui container workout">
+            <div class="ui raised card m-auto">
+              <h3>Hit 'New Workout' to get started!</h3>
+            </div>
+          </div>
+          {{/if}}
           <div class="buttons">
+            {{#if data.hasWorkouts}}
             <a id="continue-btn" href="/exercise?id={{data.workoutId}}" class="huge ui blue button">Continue Workout</a>
-            <a href="/exercise" class="huge positive ui button">New Workout</a>
+            {{/if}}
+            <a href="/workout" class="huge positive ui button">New Workout</a>
           </div>
         </div>
       </div>
@@ -35,16 +44,17 @@
   </div>
 </div>
 {{else}}
-  <div class="ui container workout">
-    <div class="ui raised card m-auto">
-        <h3>Login or sign up to begin tracking your workouts today!</h3>
-      </div>
+<div class="ui container workout">
+  <div class="ui raised card m-auto">
+    <h3>Login or sign up to begin tracking your workouts today!</h3>
   </div>
+</div>
 {{/if}}
 
 <div id="toast">
   Workout Added Successfully!
 </div>
 
-{{!-- <script src="/js/api.js"></script>
+{{!--
+<script src="/js/api.js"></script>
 <script src="/js/homepage.js"></script> --}}

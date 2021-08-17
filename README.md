@@ -1,4 +1,4 @@
-# hw14-mvc-tech-blog
+# Project 2-workout-tracker
 
 ## Table of Contents
 1. [General Info](#general-info)
@@ -9,13 +9,17 @@
 
 ### General Info
 ***
-### David OBrien's MVC Tech Blog
+### David OBrien's Workout Tracker
 
-Tech blog allowing users to create accounts, log-in, create posts, comment on posts. Application 
-uses MVC pattern to organize views.
+Workout tracker allows user to track daily workouts, and to create new workouts or
+add exercises to the current workout. Workout tracker presents average and accumulated
+workout durations over specified time period. Project supports individual user logins
+and signups in datamodel. Get in shape faster withh workout tracker!
 
-### Screenshot
+### Screenshots
 ![Image text](./images/finished-screenshot.png)
+
+![Image text](./images/dashboard-screenshot.png)
 
 ## Technologies
 ***
@@ -24,20 +28,17 @@ A list of technologies/patterns used within the project:
   * express server
   * express routes - api
   * javascript
-  * mysql database
-  * sequelizer ORM
-  * MVC - Handlebars
+  * mongodb database
+  * mongodb atlas hosting
   * Postman - used to streamline testing of api routes
   * Heroku - web hosting
-  * JawsDb Add-on
 
 ## Usage
 ***
-See link to demo video below:
 
-Link to github repository- https://github.com/dmobrienllc/hw14-mvc-tech-blog
+Link to github repository- https://github.com/dmobrienllc/hw18-workout-tracker
 
-Link to deployed app- https://murmuring-fortress-02491.herokuapp.com/
+Link to deployed app- https://floating-reef-04864.herokuapp.com/
 
 
 ## FAQs
@@ -47,4 +48,3 @@ Q Is this application awesome?
 
 A Why yes it is!
 ---
-

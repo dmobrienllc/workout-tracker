@@ -1,20 +1,6 @@
 const router = require('express').Router();
 const User = require('../../models/User');
 
-// router.get('/', async (req, res) => {
-//   const userData = await User.findAll({ include: Post }).catch((err) => {
-//     res.json(err);
-//   });
-//   res.json(userData);
-// });
-
-// router.get('/:id', async (req, res) => {
-//   const productData = await User.findByPk(req.params.id, { include: { all: true } }).catch((err) => {
-//     res.json(err);
-//   });
-//   res.json(productData);
-// });
-
 //Called by 'Sign-up' form on login page
 //Returns user if exists
 //Creates user if user doesn't exist
@@ -81,41 +67,6 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).json(err);
-  }
-});
-
-//db calls, should go into /api/blah subsection of routing
-//=GET posts?
-// router.get("/workouts", async (req, res) => {
-//   console.log("Hitting api/user/workouts")
-//   // db.Workout.aggregate([{$addFields: {totalDuration:{$sum: `$exercises.duration`}}}])
-//   //     .then(dbWorkout => {
-//   //         console.log("workout",dbWorkout);
-//   //         res.json(dbWorkout)
-//   //     })
-//   //     .catch(err => {
-//   //         console.log("error",err);
-//   //         res.status(400).json(err);
-//   //     })
-
-//   const aggregatedWorkouts = await User.findOne({ _id: req.session.user_id }).
-//                                 populate('workouts').lean().
-//                                 aggregate([{$addFields: {totalDuration:{$sum: `$exercises.duration`}}}]);
-
-//   console.log("Aggregated: ",aggregatedWorkouts);
-//   res.json(aggregatedWorkouts);
-// });
-
-//Create Workot
-router.post("/workouts", async (req, res) => {
-  console.log("Hit api workouts");
-
-  try {
-      const workout = await db.Workout.create({});
-      res.json(workout);
-  }
-  catch (err) {
-      res.status(400).json(err);
   }
 });
 

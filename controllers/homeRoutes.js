@@ -6,25 +6,24 @@ const mongoose = require('mongoose');
 
 //REFACTOR THIS
 router.get('/', async (req, res) => {
+    console.log("Session User ID: ",req.session.user_id);
     try {
         if (req.session.logged_in) {
-            const user = await User.findOne({ _id: req.session.user_id }).
-                populate('workouts').lean();
+                const user = await User.findOne({ _id: req.session.user_id }).
+                    populate('workouts').lean();
 
-            console.log("User Name: ", user);
+                console.log("User Name: ", user);
 
-            let data = parseWorkoutData(user.username, user.workouts[user.workouts.length - 1]);
+                let data = parseWorkoutData(user.username, user.workouts);
 
-            console.log("Data", data)
-
-            res.render('homepage', {
-                data,
-                logged_in: req.session.logged_in
-            })
-        }
-        else {
-            res.render('login')
-        }
+                res.render('homepage', {
+                    data,
+                    logged_in: req.session.logged_in
+                })
+            }
+            else {
+                res.render('login')
+            }
     }
     catch (err) {
         console.log(err);
@@ -36,16 +35,13 @@ router.get('/', async (req, res) => {
 router.get('/homepage', async (req, res) => {
     console.log("Home Routes/homepage");
     try {
-
         if (req.session.logged_in) {
             const user = await User.findOne({ _id: req.session.user_id }).
                 populate('workouts').lean();
 
             console.log("User Name: ", user);
 
-            let data = parseWorkoutData(user.username, user.workouts[user.workouts.length - 1]);
-
-            console.log("Data", data)
+            let data = parseWorkoutData(user.username, user.workouts);
 
             res.render('homepage', {
                 data,
@@ -81,18 +77,24 @@ router.get('/dashboard', withAuth, async (req, res) => {
     }
 });
 
-router.get('/exercise', withAuth, async (req, res) => {
-    console.log("In Homeroutes/exercise");
+router.get('/workout', withAuth, async (req, res) => {
+    console.log("In Homeroutes/workout");
 
     try {
-        const user = await User.findOne
-            ({
-                "_id": req.session.user_id
-            }).lean();
+        const newWorkout = await Workout.create(req.body);
+
+        if (newWorkout) {
+            req.session.new_workout_id = newWorkout._id;
+        }
+        console.log(newWorkout._id);
+
+        const user = await User.findByIdAndUpdate({ _id: req.session.user_id },
+            { $push: { "workouts": { _id: newWorkout._id } } });
 
         res.render('exercise', {
             user,
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            new_workout_id: req.session.new_workout_id
         });
     } catch (err) {
         console.log("Error in /exercise");
@@ -145,10 +147,13 @@ router.get('/logout', (req, res) => {
 
 
 //Convenience methods; move into external js after 
-const parseWorkoutData = (username, workout) => {
+//testing
+const parseWorkoutData = (username, workouts) => {
+
 
     let userName,
-        workoutId,
+        hasWorkOuts = false,
+        workoutId = "",
         workoutDate,
         resistDuration = 0,
         resistNumExercises = 0,
@@ -159,25 +164,31 @@ const parseWorkoutData = (username, workout) => {
         cardioDuration = 0,
         cardioDistance = 0;
 
-    userName = username;
+        userName = username;
 
-    workoutId = workout._id;
-    workoutDate = formatDate(workout.day);
+    if (workouts.length) {
+        let workout = workouts[workouts.length - 1];
 
-    for (const exercise of workout.exercises) {
+        workoutId = workout._id;
+        hasWorkOuts = true;
+        workoutDate = formatDate(workout.day);
 
-        if (exercise.type === "Resistance") {
-            resistNumExercises++;
-            resistDuration = exercise.duration;
-            resistWeight += exercise.weight;
-            resistSets += exercise.sets;
-            resistReps += exercise.reps;
-        } else {
-            cardioNumExercises++;
-            cardioDuration = exercise.duration;
-            cardioDistance += exercise.distance;
+        for (const exercise of workout.exercises) {
+
+            if (exercise.type === "Resistance") {
+                resistNumExercises++;
+                resistDuration = exercise.duration;
+                resistWeight += exercise.weight;
+                resistSets += exercise.sets;
+                resistReps += exercise.reps;
+            } else {
+                cardioNumExercises++;
+                cardioDuration = exercise.duration;
+                cardioDistance += exercise.distance;
+            }
         }
     }
+
 
     return {
         userName,
