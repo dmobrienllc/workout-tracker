@@ -1,25 +1,29 @@
 <div class="wrapper workout">
   <header>
     <h1>Fitness Tracker</h1>
-    {{#if user.workouts.length}}
-      <ul>
-      {{#each user.workouts as |workout| }}
-        <li>{{workout.day}}</li>
-      {{/each}}
-      </ul>
-    {{else}}
-      <h4>You have no workouts! Click on New Workout to get started!</h4>
-    {{/if}}
   </header>
   {{#if logged_in}}
   <div class="ui container workout">
     <div class="ui raised card m-auto">
       <div class="prev-workout">
-        <h3>Last Workout</h3>
+        <h3>Last Workout for {{data.userName}}</h3>
         <div>
-          <div class="workout-stats"></div>
+          <div class="workout-stats">
+
+            <p><strong>Date: {{data.workoutDate}}</strong></p>
+            <h5>Resistance Totals:</h5>
+            <p><strong>Duration: {{data.resistDuration}}</strong></p>
+            <p><strong>Exercises Performed: {{data.resistNumExercises}}</strong></p>
+            <p><strong>Total Weight Lifted: {{data.resistWeight}} pounds</strong></p>
+            <p><strong>Total Sets Performed: {{data.resistSets}}</strong></p>
+            <p><strong>Total Reps Performed: {{data.resistReps}}</strong></p>
+            <h5>Cardio Totals</h5>
+            <p><strong>Exercises Performed: {{data.cardioNumExercises}}</strong></p>
+            <p><strong>Total Distance Covered: {{data.cardioDistance}} miles</strong></p>
+            <p><strong>Total Duration: {{data.cardioDuration}} minutes</strong></p>
+          </div>
           <div class="buttons">
-            <a id="continue-btn" href="/exercise?" class="huge ui blue button">Continue Workout</a>
+            <a id="continue-btn" href="/exercise?id={{data.workoutId}}" class="huge ui blue button">Continue Workout</a>
             <a href="/exercise" class="huge positive ui button">New Workout</a>
           </div>
         </div>
@@ -42,5 +46,5 @@
   Workout Added Successfully!
 </div>
 
-<script src="/js/api.js"></script>
-<script src="/js/homepage.js"></script>
+{{!-- <script src="/js/api.js"></script>
+<script src="/js/homepage.js"></script> --}}

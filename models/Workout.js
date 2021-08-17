@@ -8,34 +8,34 @@ const WorkoutSchema = new Schema({
         default: Date.now
     },
     exercises: [
-    //     {
-    //     name: {
-    //         type: String,
-    //         required: true
-    //       },
-    //       type: {
-    //         type: String,
-    //         required: true
-    //       },
-    //       duration: {
-    //         type: Number
-    //       },
-    //       weight: {
-    //         type: Number
-    //       },
-    //       reps: {
-    //         type: Number
-    //       },
-    //       sets: {
-    //         type: Number
-    //       },
-    //       duration: {
-    //         type: Number
-    //       },
-    //       distance: {
-    //         type: Number
-    //       }
-    // }
+        {
+        name: {
+            type: String,
+            required: true
+          },
+          type: {
+            type: String,
+            required: true
+          },
+          duration: {
+            type: Number
+          },
+          weight: {
+            type: Number
+          },
+          reps: {
+            type: Number
+          },
+          sets: {
+            type: Number
+          },
+          duration: {
+            type: Number
+          },
+          distance: {
+            type: Number
+          }
+    }
         
         // {
         //     type: Schema.Types.ObjectId,
