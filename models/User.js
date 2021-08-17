@@ -24,12 +24,15 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now
     },
-    workouts: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Workout"
-        }
-    ]
+    workouts: {
+        type:[{type: Schema.Types.ObjectId,ref: "Workout"}]
+    }
+    // workouts: [
+    //     {
+    //         type: Schema.Types.ObjectId,
+    //         ref: "Workout"
+    //     }
+    // ]
 });
 
 UserSchema.pre('save', function(next) {                                                                                                                                        

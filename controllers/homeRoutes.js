@@ -1,33 +1,62 @@
 const router = require('express').Router();
 const { User, Workout, Exercise } = require('../models');
 const withAuth = require('../utils/auth');
+const mongoose = require('mongoose');
+//const api = require('../../public/js/api');
 
-//THIS WILL TAKE DAILY WORKOUT DATA IF USER IS LOGGED IN,
-//OTHERWISE IT"S A WELCOME SPLASH
+//REFACTOR THIS
 router.get('/', async (req, res) => {
     try {
-        res.render('homepage', {
-            logged_in: req.session.logged_in
-        });
-    } catch (err) {
+        if (req.session.logged_in) {
+            const user = await User.findOne({ _id: req.session.user_id }).
+                populate('workouts').lean();
+
+            console.log("User Name: ", user);
+
+            let data = parseWorkoutData(user.username, user.workouts[user.workouts.length - 1]);
+
+            console.log("Data", data)
+
+            res.render('homepage', {
+                data,
+                logged_in: req.session.logged_in
+            })
+        }
+        else {
+            res.render('login')
+        }
+    }
+    catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 });
 
-//Duplicated from code above, forgot syntax for wildcarding
-//this route so it dupes the / above.
+//this where you do the aggregating to present the workout box
 router.get('/homepage', async (req, res) => {
     console.log("Home Routes/homepage");
     try {
- 
-        const user = await User.findOne({ _id: req.session.user_id }).
-                                                        populate('workouts').lean();
 
-        res.render('homepage', {
-            user,
-            logged_in: req.session.logged_in
-        });
+        if (req.session.logged_in) {
+            const user = await User.findOne({ _id: req.session.user_id }).
+                populate('workouts').lean();
+
+            console.log("User Name: ", user);
+
+            let data = parseWorkoutData(user.username, user.workouts[user.workouts.length - 1]);
+
+            console.log("Data", data)
+
+            res.render('homepage', {
+                data,
+                logged_in: req.session.logged_in
+            })
+        }
+        else {
+            res.render('login')
+        }
     } catch (err) {
+        console.log(err);
         res.status(500).json(err);
     }
 });
@@ -114,52 +143,66 @@ router.get('/logout', (req, res) => {
     }
 });
 
-// //OLD HOME PAGE, 
-// router.get('/', async (req, res) => {
-//     try {
-//         const postData = await Post.findAll({
-//             include: [
-//                 {
-//                     model: User,
-//                     attributes: ['id', 'user_name'],
-//                 },
-//             ],
-//         });
 
-//         const posts = postData.map((post) => post.get({ plain: true }));
+//Convenience methods; move into external js after 
+const parseWorkoutData = (username, workout) => {
 
-//         res.render('homepage', {
-//             posts,
-//             logged_in: req.session.logged_in
-//         });
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+    let userName,
+        workoutId,
+        workoutDate,
+        resistDuration = 0,
+        resistNumExercises = 0,
+        resistWeight = 0,
+        resistSets = 0,
+        resistReps = 0,
+        cardioNumExercises = 0,
+        cardioDuration = 0,
+        cardioDistance = 0;
 
+    userName = username;
 
+    workoutId = workout._id;
+    workoutDate = formatDate(workout.day);
 
-// router.get('/posts/:id', withAuth,async (req, res) => {
-//     console.log("We're hitting GET post/id in homeRoutes.js");
-//     try {
-//         const postData = await Post.findByPk(req.params.id, { 
-//             include: [{
-//               model: Comment,
-//               include: [
-//                 User
-//               ]
-//             }
-//           ]});
+    for (const exercise of workout.exercises) {
 
-//         const post = postData.get({ plain: true });
+        if (exercise.type === "Resistance") {
+            resistNumExercises++;
+            resistDuration = exercise.duration;
+            resistWeight += exercise.weight;
+            resistSets += exercise.sets;
+            resistReps += exercise.reps;
+        } else {
+            cardioNumExercises++;
+            cardioDuration = exercise.duration;
+            cardioDistance += exercise.distance;
+        }
+    }
 
-//         res.render('post-detail', {
-//           post,
-//           logged_in: req.session.logged_in
-//         });
-//     } catch (err) {
-//         res.status(500).json(err);
-//     }
-// });
+    return {
+        userName,
+        workoutId,
+        workoutDate,
+        resistDuration,
+        resistNumExercises,
+        resistWeight,
+        resistSets,
+        resistReps,
+        cardioNumExercises,
+        cardioDuration,
+        cardioDistance
+    }
+}
+
+const formatDate = (date) => {
+    const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+    };
+
+    return new Date(date).toLocaleDateString(options);
+}
 
 module.exports = router;
