@@ -43,6 +43,8 @@ router.get('/homepage', async (req, res) => {
 
             let data = parseWorkoutData(user.username, user.workouts);
 
+            console.log("Data: ", data);
+
             res.render('homepage', {
                 data,
                 logged_in: req.session.logged_in
@@ -192,6 +194,7 @@ const parseWorkoutData = (username, workouts) => {
 
     return {
         userName,
+        hasWorkOuts,
         workoutId,
         workoutDate,
         resistDuration,

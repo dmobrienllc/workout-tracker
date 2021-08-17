@@ -8,7 +8,7 @@
       <div class="prev-workout">
         <h3>Last Workout for {{data.userName}}</h3>
         <div>
-          {{#if data.hasWorkouts}}
+          {{#if data.hasWorkOuts}}
           <div class="workout-stats">
             <p><strong>Date: {{data.workoutDate}}</strong></p>
             <h5>Resistance Totals:</h5>
@@ -30,7 +30,7 @@
           </div>
           {{/if}}
           <div class="buttons">
-            {{#if data.hasWorkouts}}
+            {{#if data.hasWorkOuts}}
             <a id="continue-btn" href="/exercise?id={{data.workoutId}}" class="huge ui blue button">Continue Workout</a>
             {{/if}}
             <a href="/workout" class="huge positive ui button">New Workout</a>
