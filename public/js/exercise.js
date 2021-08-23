@@ -97,6 +97,11 @@ function validateInputs() {
 async function handleFormSubmit(event) {
   event.preventDefault();
 
+  if (shouldNavigateAway) {
+    location.href = "/";
+    return;
+  }
+
   let workoutData = {};
 
   if (workoutType === "Cardio") {
@@ -115,12 +120,6 @@ async function handleFormSubmit(event) {
 
   await API.addExercise(workoutData);
   clearInputs();
-
-  if (shouldNavigateAway) {
-    location.href = "/";
-  }
-
-  //toast.classList.add("success");
 }
 
 function handleToastAnimationEnd() {

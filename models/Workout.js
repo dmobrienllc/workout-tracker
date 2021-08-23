@@ -35,13 +35,12 @@ const WorkoutSchema = new Schema({
           distance: {
             type: Number
           }
-    }
+    }]
         
         // {
         //     type: Schema.Types.ObjectId,
         //     ref: "Exercise"
         // }
-    ]
 });
 
 const Workout = mongoose.model("Workout",WorkoutSchema);

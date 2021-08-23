@@ -11,7 +11,7 @@ const API = {
     return json[json.length - 1];
   },
   async addExercise(data) {
-    console.log("In add Exercise:", data)
+    console.log("In addExercise:", data)
     const res = await fetch("/api/workouts/", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -23,6 +23,7 @@ const API = {
     return json;
   },
   async createWorkout(data = {}) {
+    console.log("createWorkout:", data)
     const res = await fetch("/api/workouts", {
       method: "POST",
       body: JSON.stringify(data),
@@ -34,6 +35,7 @@ const API = {
   },
 
   async getWorkoutsInRange() {
+    console.log("API Workouts in range")
     const res = await fetch(`/api/workouts/range`);
     const json = await res.json();
 

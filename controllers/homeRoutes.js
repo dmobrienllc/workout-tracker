@@ -67,7 +67,9 @@ router.get('/dashboard', withAuth, async (req, res) => {
         const user = await User.findOne
             ({
                 "_id": req.session.user_id
-            }).lean();
+            }).populate('workouts').lean();
+
+            console.log("Dashboard User: ", user);
 
         res.render('dashboard', {
             user,
